@@ -1,13 +1,16 @@
+import P from 'pino'
 import baileys from '@whiskeysockets/baileys'
 const { default: makeWASocket, useMultiFileAuthState, DisconnectReason } = baileys
 
 async function startBot() {
     const { state, saveCreds } = await useMultiFileAuthState('auth')
 
-    const sock = makeWASocket({
-        auth: state,
-        printQRInTerminal: false
-    })
+const sock = makeWASocket({
+    auth: state,
+    logger: P({ level: 'silent' }),
+    browser: ["Ubuntu", "Chrome", "20.0.04"],
+    printQRInTerminal: false
+})
 
     // 👇 guardar sesión
     sock.ev.on('creds.update', saveCreds)
