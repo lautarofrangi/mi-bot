@@ -10,13 +10,20 @@ async function startBot() {
 
     sock.ev.on('creds.update', saveCreds)
 
-    // 👇 ACA GENERAMOS EL CODIGO AUTOMATICO
-    if (!sock.authState.creds.registered) {
-        const numero = "5491135139485" // 👈 TU NUMERO REAL
+    sock.ev.on('connection.update', async (update) => {
+        const { connection } = update
 
-        const code = await sock.requestPairingCode(numero)
-        console.log("🔑 CODIGO:", code)
-    }
+        if (connection === 'open') {
+            console.log("✅ Conectado a WhatsApp")
+
+            if (!sock.authState.creds.registered) {
+                const numero = "5491135139485" // 👈 TU NUMERO REAL
+
+                const code = await sock.requestPairingCode(numero)
+                console.log("🔑 CODIGO:", code)
+            }
+        }
+    })
 }
 
 startBot()
