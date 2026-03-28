@@ -1,4 +1,5 @@
-import makeWASocket, { useMultiFileAuthState } from '@whiskeysockets/baileys'
+import baileys from '@whiskeysockets/baileys'
+const { default: makeWASocket, useMultiFileAuthState } = baileys
 
 async function startBot() {
     const { state, saveCreds } = await useMultiFileAuthState('auth')
